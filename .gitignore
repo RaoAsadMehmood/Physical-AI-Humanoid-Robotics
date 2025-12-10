@@ -1,0 +1,99 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+.ENV/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+.next/
+.nuxt/
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.hypothesis/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.dev
+.env.production
+.env.staging
+.env.test
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docusaurus
+.docusaurus/
+.cache/
+.build/
+api/
+docusaurus-book/build/
+docusaurus-book/node_modules/
+docusaurus-book/.docusaurus/
+
+# Project specific
+.claude/
+nul
+
+# Backend
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/venv/
+backend/env/
+backend/.env*
+backend/logs/
+backend/*.log

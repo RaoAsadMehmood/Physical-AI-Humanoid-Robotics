@@ -1,0 +1,8 @@
+{
+  "label": "Chapter 2: Simulation",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore simulation environments for Physical AI and Humanoid Robotics using Gazebo and NVIDIA Isaac Sim."
+  }
+}

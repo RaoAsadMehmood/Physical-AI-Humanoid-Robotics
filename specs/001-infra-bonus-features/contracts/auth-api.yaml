@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  title: Better-Auth Integration API
+  description: API for user authentication, personalization, and progress tracking
+  version: 1.0.0
+servers:
+  - url: https://api.physical-ai-humanoid-robotics.com/v1
+    description: Production server
+  - url: https://staging-api.physical-ai-humanoid-robotics.com/v1
+    description: Staging server
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      description: Creates a new user account with background information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email address
+                password:
+                  type: string
+                  format: password
+                  description: User's password (min 8 characters)
+                name:
+                  type: string
+                  description: User's full name
+                user_background:
+                  type: object
+                  description: User's technical background and interests
+                  properties:
+                    experience_level:
+                      type: string
+                      enum: [beginner, intermediate, advanced]
+                    robotics_interests:
+                      type: array
+                      items:
+                        type: string
+                        enum: [hardware, software, ai, control_systems, sensors, actuators]
+                    current_focus:
+                      type: string
+                      enum: [learning, implementation, research, hobby]
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+                    description: JWT token for authentication
+        '400':
+          description: Invalid input data
+        '409':
+          description: User with email already exists
+
+  /auth/login:
+    post:
+      summary: Login user
+      description: Authenticates user and returns JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+                    description: JWT token for authentication
+        '401':
+          description: Invalid credentials
+
+  /users/profile:
+    get:
+      summary: Get user profile
+      description: Retrieves current user's profile information
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+    put:
+      summary: Update user profile
+      description: Updates current user's profile information
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+
+  /users/progress:
+    get:
+      summary: Get user progress
+      description: Retrieves current user's learning progress
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: content_type
+          in: query
+          schema:
+            type: string
+            enum: [chapter, lesson, section]
+          description: Filter by content type
+      responses:
+        '200':
+          description: User progress retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  progress:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserProgress'
+    post:
+      summary: Update user progress
+      description: Updates progress for a specific content item
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content_id
+                - completion_percentage
+              properties:
+                content_id:
+                  type: string
+                  description: ID of the content being tracked
+                content_type:
+                  type: string
+                  enum: [chapter, lesson, section]
+                completion_percentage:
+                  type: number
+                  minimum: 0
+                  maximum: 100
+                time_spent_seconds:
+                  type: integer
+                notes:
+                  type: string
+      responses:
+        '200':
+          description: Progress updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  progress:
+                    $ref: '#/components/schemas/UserProgress'
+
+  /users/bookmarks:
+    get:
+      summary: Get user bookmarks
+      description: Retrieves current user's bookmarks
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User bookmarks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookmarks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bookmark'
+    post:
+      summary: Create bookmark
+      description: Creates a new bookmark for the user
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content_id
+                - title
+                - url_path
+              properties:
+                content_id:
+                  type: string
+                title:
+                  type: string
+                url_path:
+                  type: string
+                notes:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Bookmark created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookmark:
+                    $ref: '#/components/schemas/Bookmark'
+
+  /users/personalization:
+    get:
+      summary: Get personalization profile
+      description: Retrieves current user's personalization settings
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Personalization profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    $ref: '#/components/schemas/PersonalizationProfile'
+    put:
+      summary: Update personalization profile
+      description: Updates current user's personalization settings
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalizationProfile'
+      responses:
+        '200':
+          description: Personalization profile updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    $ref: '#/components/schemas/PersonalizationProfile'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        user_background:
+          type: object
+        preferred_language:
+          type: string
+          default: 'en'
+        theme_preference:
+          type: string
+          default: 'light'
+
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        user_background:
+          type: object
+        preferred_language:
+          type: string
+        theme_preference:
+          type: string
+
+    UserProgress:
+      type: object
+      properties:
+        id:
+          type: string
+        content_id:
+          type: string
+        content_type:
+          type: string
+          enum: [chapter, lesson, section]
+        completion_percentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        time_spent_seconds:
+          type: integer
+        last_accessed_at:
+          type: string
+          format: date-time
+        marked_completed_at:
+          type: string
+          format: date-time
+        notes:
+          type: string
+
+    Bookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        content_id:
+          type: string
+        title:
+          type: string
+        url_path:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    PersonalizationProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        interests:
+          type: array
+          items:
+            type: string
+        experience_level:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        learning_goals:
+          type: array
+          items:
+            type: string
+        preferred_topics:
+          type: array
+          items:
+            type: string
+        avoid_topics:
+          type: array
+          items:
+            type: string
+        recommended_content_queue:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time

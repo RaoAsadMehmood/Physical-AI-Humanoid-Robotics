@@ -1,0 +1,8 @@
+{
+  "label": "Chapter 1: ROS 2",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn the fundamentals of ROS 2 for Physical AI and Humanoid Robotics applications."
+  }
+}
