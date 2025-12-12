@@ -12,7 +12,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'Physical AI & Humanoid Robotics',
   tagline: 'Bridging the Digital Brain to the Physical Body',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/robot-favicon.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -47,10 +47,6 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
@@ -58,10 +54,6 @@ const config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -70,11 +62,39 @@ const config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        gtag: {
+          trackingID: 'G-WNEPGR5HWL',
+          anonymizeIP: true,
+        },
       }),
     ],
   ],
 
-  themes: ['@docusaurus/theme-live-codeblock'],
+  themes: [
+    '@docusaurus/theme-live-codeblock',
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        // ... your options
+        hashed: true,
+        // For Docs using Chinese, The `language` is recommended to set to:
+        // ```
+        // language: ["en", "zh"],
+        // ```
+        language: ["en"],
+        // Optional: To search the content of external domain
+        // externalUrlRegex: "external-domain\\.com",
+        // Optional: To index all website pages
+        indexDocs: true,
+        indexBlog: true,
+        indexPages: true,
+        // Optional: To hide the search bar of the page
+        hideSearchBarWithNoSearchContext: true,
+        // Optional: To search the content of external domain
+        // externalUrlRegex: "example-domain\\.com",
+      },
+    ],
+  ],
 
   plugins: [
     [
@@ -87,74 +107,52 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
-      colorMode: {
-        respectPrefersColorScheme: true,
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  ({
+    image: 'img/docusaurus-social-card.jpg',
+    metadata: [
+      {name: 'keywords', content: 'ai, robotics, humanoid, physical ai, ros, gazebo, isaac'}
+    ],
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
+
+    // --- START NAVBAR OPTIMIZATION ---
+    navbar: {
+      // Sleek Text Logo
+      title: 'Physical AI & Humanoid Robotics',
+      logo: {
+        alt: 'Physical AI & Humanoid Robotics',
+        src: 'img/robot-logo.svg',
+        width: 32,
+        height: 32,
       },
-      navbar: {
-        title: 'Physical AI & Humanoid Robotics',
-        logo: {
-          alt: 'RAO ASAD MEHMOOD',
-          src: 'img/logo.svg',
+      items: [
+        {
+          type: 'docSidebar',
+          sidebarId: 'tutorialSidebar',
+          position: 'left',
+          label: 'Chapters',
         },
-        items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Chapters',
-          },
-          {
-            type: 'localeDropdown',
-            position: 'right',
-          },
-          {
-            href: 'https://github.com/RaoAsadMehmood',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Chapters',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Personal Links',
-            items: [
-              {
-                label: 'Portfolio',
-                href: 'https://www.raoasad.site/',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/RaoAsadMehmood',
-              },
-              {
-                label: 'LinkedIn',
-                href: 'https://www.linkedin.com/in/rao-asad-mehmood/',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Rao Asad Mehmood. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
-    }),
+        // [1] FUNCTIONAL SEARCH BAR (Standard Docusaurus Search)
+        {
+          type: 'search',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/RaoAsadMehmood/Physical-AI-Humanoid-Robotics',
+          label: 'GitHub',
+          position: 'right',
+          className: 'header-github-link',
+        },
+      ],
+    },
+    // --- END NAVBAR OPTIMIZATION ---
+
+    // ... [baaki settings jese footer aur prism settings remain] ...
+  }),
 };
 
 export default config;

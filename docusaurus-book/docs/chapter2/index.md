@@ -1,5 +1,11 @@
 ---
 sidebar_position: 1
+prev:
+  title: Week 10, Lesson 10 - ROS 2 Real-Time Performance and Optimization
+  url: /docs/chapter1/week-plan/week10-lesson10-ros2-realtime-performance
+next:
+  title: Week 14, Lesson 1 - Introduction to Gazebo and Simulation Concepts
+  url: /docs/chapter2/week-plan/week14-lesson1-introduction-gazebo-simulation
 ---
 
 # Chapter 2: Gazebo - The Digital Twin

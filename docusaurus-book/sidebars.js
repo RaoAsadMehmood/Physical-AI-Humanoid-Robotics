@@ -20,22 +20,26 @@ const sidebars = {
     {
       type: 'category',
       label: 'Introduction',
-      items: ['intro'],
       link: {
         type: 'doc',
         id: 'intro',
       },
+      items: [],
     },
     {
       type: 'category',
       label: 'Chapter 1: ROS 2 - The Nervous System',
       items: [
-        'chapter1/index',
         'chapter1/week-plan/week1-lesson1-introduction-ros2-physical-ai',
         'chapter1/week-plan/week2-lesson2-ros2-architecture',
         'chapter1/week-plan/week3-lesson3-python-agents-rclpy',
         'chapter1/week-plan/week4-lesson4-understanding-urdf',
         'chapter1/week-plan/week5-lesson5-ros2-package-building',
+        'chapter1/week-plan/week6-lesson6-ros2-actions-services-advanced',
+        'chapter1/week-plan/week7-lesson7-ros2-launch-systems',
+        'chapter1/week-plan/week8-lesson8-ros2-testing-debugging',
+        'chapter1/week-plan/week9-lesson9-ros2-security-communication',
+        'chapter1/week-plan/week10-lesson10-ros2-realtime-performance',
       ],
       link: {
         type: 'doc',

@@ -1,5 +1,11 @@
 ---
 sidebar_position: 1
+prev:
+  title: Introduction
+  url: /docs/intro
+next:
+  title: Week 1, Lesson 1 - Introduction to ROS 2 and Physical AI Concepts
+  url: /docs/chapter1/week-plan/week1-lesson1-introduction-ros2-physical-ai
 ---
 
 # Chapter 1: ROS 2 Fundamentals
