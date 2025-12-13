@@ -8,6 +8,13 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+// Dynamic BASE_PATH determination based on BUILD_TARGET environment variable
+// If BUILD_TARGET is set to 'PORTFOLIO', use '/physical-ai-book/' for portfolio subdirectory
+// Otherwise, use '/' for default Vercel deployment
+const BASE_PATH = process.env.BUILD_TARGET === 'PORTFOLIO' 
+  ? '/physical-ai-book/' 
+  : '/';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Physical AI & Humanoid Robotics',
@@ -20,15 +27,15 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://physical-ai-humanoid-robotics-beige.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  // Dynamically determined based on BUILD_TARGET environment variable
+  baseUrl: BASE_PATH,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  // organizationName: 'RaoAsadMehmood', // Usually your GitHub org/user name.
+  // projectName: 'Physical-AI-Humanoid-Robotics', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
