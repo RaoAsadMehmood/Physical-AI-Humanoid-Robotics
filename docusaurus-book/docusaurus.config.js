@@ -141,7 +141,12 @@ const config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Chapters',
+          label: 'Learn',
+        },
+        {
+          to: '/blog',
+          label: 'Blog',
+          position: 'left',
         },
         // [1] FUNCTIONAL SEARCH BAR (Standard Docusaurus Search)
         {
