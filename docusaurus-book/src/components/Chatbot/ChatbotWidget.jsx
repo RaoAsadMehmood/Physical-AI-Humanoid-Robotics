@@ -17,11 +17,11 @@ const ChatbotWidget = () => {
 
   // API endpoint - uses environment variable or defaults
   // Set REACT_APP_API_URL in Vercel environment variables for production
-  const API_URL = 
-    process.env.REACT_APP_API_URL || 
-    (process.env.NODE_ENV === 'production' 
-      ? 'https://rag-chatbot-api.up.railway.app/'  // Replace with your deployed backend URL
-      : 'http://localhost:8000');
+  const API_URL = typeof window !== 'undefined'
+    ? (window.REACT_APP_API_URL ||
+       (typeof process !== 'undefined' && process?.env?.REACT_APP_API_URL) ||
+       'https://rag-chatbot-api.up.railway.app')  // Replace with your deployed backend URL
+    : 'https://rag-chatbot-api.up.railway.app';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

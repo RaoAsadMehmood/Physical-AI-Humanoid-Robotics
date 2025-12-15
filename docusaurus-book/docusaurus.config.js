@@ -111,6 +111,30 @@ const config = {
         toExtensions: ['html'],
       },
     ],
+    // Plugin to expose environment variables to the client and handle process polyfill
+    async function webpackConfigPlugin(context, options) {
+      return {
+        name: 'custom-webpack-config',
+        configureWebpack(config, isServer, utils) {
+          const webpack = require('webpack');
+
+          return {
+            resolve: {
+              fallback: {
+                process: require.resolve('process/browser'),
+              },
+            },
+            plugins: [
+              ...config.plugins,
+              new webpack.DefinePlugin({
+                'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL || 'https://rag-chatbot-api.up.railway.app'),
+                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+              }),
+            ],
+          };
+        },
+      };
+    },
   ],
 
   themeConfig:
