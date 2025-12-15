@@ -15,6 +15,16 @@ const ChatbotWidget = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Check if chatbot has been closed before in localStorage
+  const hasClosedChatbot = typeof window !== 'undefined'
+    ? localStorage.getItem('chatbotClosed') === 'true'
+    : false;
+
+  // Function to reset the chatbot closed flag (useful for testing)
+  const resetChatbotFlag = () => {
+    localStorage.removeItem('chatbotClosed');
+  };
+
   // API endpoint - uses environment variable or defaults
   // Set REACT_APP_API_URL in Vercel environment variables for production
   const API_URL = typeof window !== 'undefined'
@@ -36,6 +46,17 @@ const ChatbotWidget = () => {
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Auto-open chatbot after 3 seconds if not previously closed by user
+  useEffect(() => {
+    if (!hasClosedChatbot && !isOpen) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+      }, 3000); // 3 seconds delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [hasClosedChatbot, isOpen]);
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -104,7 +125,15 @@ const ChatbotWidget = () => {
       {/* Chatbot Button */}
       <button
         className={clsx(styles.chatbotButton, isOpen && styles.chatbotButtonOpen)}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const newState = !isOpen;
+          setIsOpen(newState);
+
+          // Store in localStorage when user closes the chatbot
+          if (!newState) {
+            localStorage.setItem('chatbotClosed', 'true');
+          }
+        }}
         aria-label="Open chatbot"
       >
         {isOpen ? (
@@ -125,11 +154,11 @@ const ChatbotWidget = () => {
           <div className={styles.chatbotHeader}>
             <div className={styles.chatbotHeaderContent}>
               <div className={styles.chatbotAvatar}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                 </svg>
               </div>
-              <div>
+              <div className={styles.chatbotInfo}>
                 <h3 className={styles.chatbotTitle}>AI Tutor</h3>
                 <p className={styles.chatbotSubtitle}>Physical AI & Humanoid Robotics</p>
               </div>
@@ -158,11 +187,23 @@ const ChatbotWidget = () => {
                   message.role === 'user' ? styles.messageUser : styles.messageAssistant
                 )}
               >
+                {message.role === 'assistant' && (
+                  <div className={styles.messageAvatar}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                  </div>
+                )}
                 <div className={styles.messageContent}>{message.content}</div>
               </div>
             ))}
             {isLoading && (
               <div className={clsx(styles.message, styles.messageAssistant)}>
+                <div className={styles.messageAvatar}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                  </svg>
+                </div>
                 <div className={styles.messageContent}>
                   <div className={styles.typingIndicator}>
                     <span></span>
