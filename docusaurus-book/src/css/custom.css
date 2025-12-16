@@ -42,29 +42,23 @@
 }
 
 /* Dark mode specific colors (professional theme) */
-/* LIGHT MODE FIX: Ensure clean look when theme is toggled */
+/* LIGHT MODE */
 [data-theme='light'] {
+  --ifm-background-color: #f7f9fc;
+  --ifm-background-surface-color: #ffffff;
+
+  --ifm-font-color-base: #1c1e21;
+  --ifm-font-color-secondary: #5f6368;
+
   --ifm-color-primary: #9a4eae;
-  --ifm-color-primary-dark: #7a3e8a;
-  --ifm-background-color: #ffffff; /* White background */
-  --ifm-background-surface-color: #f8f9fa; /* Light surface */
-  --ifm-font-color-base: #212529;
-  --ifm-text-color: #212529;
+  --ifm-color-primary-dark: #823c97;
+  --ifm-color-primary-darker: #6b2f7e;
+  --ifm-color-primary-light: #b06ac1;
+
   --ifm-navbar-background-color: #ffffff;
-  --ifm-heading-color: #1a1a1a;          /* Dark text for headings */
+  --ifm-footer-background-color: #0f0f14;
 
-  /* Link colors for light mode */
-  --ifm-link-color: #7a3e8a;
-  --ifm-link-hover-color: #5a2e6a;
-  --ifm-menu-color: #212529;
-  --ifm-menu-color-active: #9a4eae;
-  --ifm-menu-link-sublist-icon-filter: invert(25%) sepia(20%) saturate(300%) hue-rotate(250deg);
-
-  /* Resetting glow/border for light mode */
-  .card {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  }
+  --ifm-code-background: #eef1f6;
 }
 
 /* Typography: Clean, technical fonts */

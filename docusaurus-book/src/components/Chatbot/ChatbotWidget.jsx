@@ -22,7 +22,7 @@ const ChatbotWidget = () => {
 
   // Function to reset the chatbot closed flag (useful for testing)
   const resetChatbotFlag = () => {
-    localStorage.removeItem('chatbotClosed');
+    localStorage.removeItem('chatbotClosed'); 
   };
 
   // API endpoint - uses environment variable or defaults

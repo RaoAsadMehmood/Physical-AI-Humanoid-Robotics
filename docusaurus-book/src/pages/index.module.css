@@ -174,3 +174,67 @@
   .simOutput { order: 2; }
   .codePre { order: 1; }
 }
+
+
+.sparkleText {
+  position: relative;
+  display: inline-block;
+  padding: 6px 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-primary);
+  overflow: hidden;
+}
+
+/* Main shimmer layer */
+.sparkleText::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.8) 40%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  animation: shimmer 3.5s infinite;
+}
+
+/* Star particles */
+.sparkleText::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 10% 30%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 30% 70%, #fff, transparent),
+    radial-gradient(2px 2px at 55% 40%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 75% 65%, #fff, transparent),
+    radial-gradient(2px 2px at 90% 20%, #fff, transparent);
+  animation: sparkle 2.8s infinite ease-in-out;
+  opacity: 0.9;
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  50% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}

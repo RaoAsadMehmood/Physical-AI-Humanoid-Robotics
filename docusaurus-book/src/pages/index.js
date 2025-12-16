@@ -51,9 +51,16 @@ function HeroSection() {
     <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
         <motion.div variants={container} initial="hidden" animate="visible" className="text--center">
-          <motion.div variants={item} className={styles.heroEyebrow} style={{ borderColor: ACCENT }}>
-            THE FUTURE OF ROBOTICS — ROS 2 & ISAAC SIM
-          </motion.div>
+        <motion.div
+  variants={item}
+  className={styles.heroEyebrow}
+  style={{ borderColor: ACCENT }}
+>
+  <span className={styles.sparkleText}>
+    THE FUTURE OF ROBOTICS — ROS 2 & ISAAC SIM
+  </span>
+</motion.div>
+
           <motion.div variants={item}>
             <Heading as="h1" className={clsx('hero__title', styles.gradientTitle)}>{siteConfig.title}</Heading>
           </motion.div>

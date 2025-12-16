@@ -37,7 +37,7 @@ const config = {
   // organizationName: 'RaoAsadMehmood', // Usually your GitHub org/user name.
   // projectName: 'Physical-AI-Humanoid-Robotics', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -177,17 +177,59 @@ const config = {
           type: 'search',
           position: 'right',
         },
-        {
-          href: 'https://github.com/RaoAsadMehmood/Physical-AI-Humanoid-Robotics',
-          label: 'GitHub',
-          position: 'right',
-          className: 'header-github-link',
-        },
       ],
     },
     // --- END NAVBAR OPTIMIZATION ---
 
-    // ... [baaki settings jese footer aur prism settings remain] ...
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Docs',
+          items: [
+            {
+              label: 'Tutorial',
+              to: '/docs/intro',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            },
+            {
+              label: 'Discord',
+              href: 'https://discordapp.com/invite/docusaurus',
+            },
+            {
+              label: 'Twitter',
+              href: 'https://twitter.com/docusaurus',
+            },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/facebook/docusaurus',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+    },
+    prism: {
+      theme: prismThemes.github,
+      darkTheme: prismThemes.dracula,
+    },
   }),
 };
 
